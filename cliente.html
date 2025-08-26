@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/cliente.css" />
+    <title>cliente</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shopping-bag"></i> StoreTechnology
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#products">Productos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                    <li><a href="HistorialCliente.html">Historial de compras</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <div class="logout-btn" id="btnCerrarSesion">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1>Bienvenido a StoreTechnology</h1>
+            <p>Descubre la última tecnología con los mejores precios</p>
+            <button class="cta-button" onclick="scrollToProducts()">
+                Ver Productos
+            </button>
+        </section>
+        
+        <!-- Products Section -->
+        <section class="products-section" id="products">
+            <h2 class="section-title">Nuestros Productos</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-cart"></i> Carrito de Compras</h2>
+                <button class="close-cart" onclick="toggleCart()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="cartItems">
+                <!-- Cart items will be displayed here -->
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span>$<span id="cartSubtotal">0</span></span>
+                </div>
+                <div class="summary-row">
+                    <span>IVA:</span>
+                    <span>$<span id="cartTax">0</span></span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>Total:</span>
+                    <span>$<span id="cartTotal">0</span></span>
+                </div>
+                <button class="checkout-btn" onclick="showCheckoutForm()">
+                    <i class="fas fa-credit-card"></i> Proceder al Pago
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h2>Finalizar Compra</h2>
+                <button class="close-checkout" onclick="toggleCheckout()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Información Personal</h3>
+                    <div class="form-group">
+                        <label for="fullName">Nombre Completo *</label>
+                        <input type="text" id="fullName" name="fullName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="Ej: +57 300 123 4567" />
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Dirección de Envío</h3>
+                    <div class="form-group">
+                        <label for="address">Dirección Completa *</label>
+                        <textarea id="address" name="address" rows="3" required
+                            placeholder="Calle, número, apartamento, ciudad, código postal"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-credit-card"></i> Método de Pago</h3>
+                    <div class="payment-methods">
+                        <div class="payment-option">
+                            <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" required />
+                            <label for="creditCard">
+                                <i class="fas fa-credit-card"></i> Tarjeta de Crédito/Débito
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="paypal" name="paymentMethod" value="paypal" />
+                            <label for="paypal">
+                                <i class="fab fa-paypal"></i> PayPal
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="transfer" name="paymentMethod" value="transfer" />
+                            <label for="transfer">
+                                <i class="fas fa-university"></i> Transferencia Bancaria
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="cash" name="paymentMethod" value="cash" />
+                            <label for="cash">
+                                <i class="fas fa-money-bill-wave"></i> Pago Contra Entrega
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section" id="cardDetails" style="display: none">
+                    <h3><i class="fas fa-lock"></i> Detalles de Tarjeta</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardNumber">Número de Tarjeta</label>
+                            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456"
+                                maxlength="19" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiryDate">Fecha de Vencimiento</label>
+                            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" />
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-summary">
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span>$<span id="checkoutSubtotal">0</span></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>IVA:</span>
+                        <span>$<span id="checkoutTax">0</span></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Envío:</span>
+                        <span>$<span id="shippingCost">15.000</span></span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total:</span>
+                        <span>$<span id="checkoutTotal">0</span></span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="toggleCheckout()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-confirm">
+                        <i class="fas fa-lock"></i> Confirmar Pedido
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Social Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/tienda" target="_blank" class="floating-btn whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://facebook.com/tienda" target="_blank" class="floating-btn facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/tienda" target="_blank" class="floating-btn instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://twitter.com/tienda" target="_blank" class="floating-btn twitter">
+            <span style="font-weight: bold; font-size: 20px">X</span>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <i class="fas fa-shopping-bag"></i> StoreTechnology
+            </div>
+            <div class="footer-links">
+                <a href="#home">Inicio</a>
+                <a href="#products">Productos</a>
+                <a href="#contact">Contacto</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://facebook.com/tienda" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/tienda" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/tienda" target="_blank"><span style="font-weight: bold">X</span></a>
+            </div>
+            <p class="footer-copy">
+                &copy; 2025 StoreTechnology. Todos los derechos reservados. Brayan
+                David Herrera
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="js/cliente.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const idUsuario = sessionStorage.getItem("idUsuario");
+            const role = sessionStorage.getItem("rol");
+
+            if (!idUsuario || role !== "cliente") {
+                alert(
+                    "Debes iniciar sesión para acceder a esta página y ser cliente."
+                );
+                window.location.href = "login.html";
+            }
+            // Manejar clic en botón de cerrar sesión
+            $("#btnCerrarSesion").click(function (e) {
+                e.preventDefault();
+                if (confirm("¿Estás seguro de que quieres cerrar sesión?")) {
+                    sessionStorage.clear();
+                    window.location.href = "login.html";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

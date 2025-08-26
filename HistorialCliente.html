@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/Admin.css">
+    <title>ClienteHistorial</title>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2><i class="fas fa-cogs"></i> Cliente</h2>
+        <ul>
+            <li>
+                <a href="cliente.html"><i class="fas fa-arrow-left"></i> Regresar</a>
+            </li>
+            <button id="btnCerrarSesion" class="btn-add">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Panel de Historial de Compras</h1>
+            <p class="mb-0">Bienvenido Puedes ver las compras realizadas</p>
+        </header>
+
+       
+
+        <!-- Sección Pedidos -->
+        <section id="tablaHistorial" class="card seccion-content">
+            <h2>Compras</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>idPedido</th>
+                            <th>estado</th>
+                            <th>nombresProductos</th>
+                            <th>fecha de compra</th>
+                            <th>subtotal</th>
+                            <th>descuentos_totales</th>
+                            <th>impuestos_totales</th>
+                            <th>total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPedidos">
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+      
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="js/historialCliente.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Verificar sesión de administrador
+            const idUsuario = sessionStorage.getItem("idUsuario");
+            const role = sessionStorage.getItem("rol");
+
+            if (!idUsuario || role !== "cliente") {
+                alert("Debes iniciar sesión como cliente para acceder a esta página.");
+                window.location.href = "login.html";
+            }
+
+            // Manejar clic en botón de cerrar sesión
+            $('#btnCerrarSesion').click(function (e) {
+                e.preventDefault();
+                if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                    sessionStorage.clear();
+                    window.location.href = "login.html";
+                }
+            });
+        });
+    </script>
+    
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/registrar.css">
+    <title>Registar-storeTechnology</title>
+</head>
+
+<body>
+    <main>
+        <section class="auth-section">
+            <div class="auth-container">
+                <h2>Crear Cuenta</h2>
+                <form id="formRegistro" action="Registrar" method="POST" class="auth-form">
+
+                    <div class="form-group">
+                        <label for="cedula">Cédula</label>
+                        <input type="text" id="cedula" name="cedula" placeholder="Número de cédula" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico</label>
+                        <!-- Corrección: type="email" en lugar de type="correo" -->
+                        <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="direccion">Direccion</label>
+                        <input type="text" id="direccion" name="direccion" placeholder="Tu direccion" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="text" id="telefono" name="telefono" placeholder="Tu telefono completo" required>
+                    </div>
+
+                    <input type="hidden" id="rol" name="rol" value="cliente">
+
+                    <button type="submit" class="auth-btn">Registrarse</button>
+                    <p class="auth-text">¿Ya tienes cuenta? <a href="login.html">Inicia Sesión</a></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer corregido -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <i class="fas fa-shopping-bag"></i> StoreTechnology
+            </div>
+
+            <div class="footer-social">
+                <!-- Corrección: Usar elementos <i> para todos los íconos -->
+                <a href="https://facebook.com/tienda" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/tienda" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/tienda" target="_blank"><span style="font-weight: bold;">X</span></a>
+            </div>
+
+            <!-- Corrección: Texto de copyright actualizado -->
+            <p class="footer-copy">&copy; 2025 StoreTechnology. Todos los derechos reservados. Brayan David Herrera</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="js/usuarios.js"></script>
+</body>
+
+</html>

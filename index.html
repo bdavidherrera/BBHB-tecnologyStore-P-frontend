@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>BDHB-Ecomerce</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shopping-bag"></i> StoreTechnology
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#products">Productos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1>Bienvenido a StoreTechnology</h1>
+            <p>Descubre la última tecnología con los mejores precios</p>
+            <button class="cta-button" onclick="scrollToProducts()">Ver Productos</button>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section" id="products">
+            <h2 class="section-title">Nuestros Productos</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+    </main>
+
+
+
+
+
+    <!-- Floating Social Buttons -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/tienda" target="_blank" class="floating-btn whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://facebook.com/tienda" target="_blank" class="floating-btn facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com/tienda" target="_blank" class="floating-btn instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://twitter.com/tienda" target="_blank" class="floating-btn twitter">
+            <span style="font-weight: bold; font-size: 20px;">X</span>
+        </a>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <i class="fas fa-shopping-bag"></i> StoreTechnology
+            </div>
+            <div class="footer-links">
+                <a href="#home">Inicio</a>
+                <a href="#products">Productos</a>
+                <a href="#contact">Contacto</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://facebook.com/tienda" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/tienda" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/tienda" target="_blank"><span style="font-weight: bold;">X</span></a>
+            </div>
+            <p class="footer-copy">&copy; 2025 StoreTechnology. Todos los derechos reservados. Brayan David Herrera</p>
+        </div>
+    </footer>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="js/Admin/productosAdmin.js"></script>
+
+    <!-- Modal Requerimiento Login -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title w-100" id="loginRequiredLabel">
+                        <i class="fas fa-lock"></i> Acceso Restringido
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Para continuar navegando y realizar acciones en la tienda debes iniciar sesión.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btn-ir-login">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const role = sessionStorage.getItem("rol");
+
+            // Botón que lleva al login desde el modal
+            document.getElementById('btn-ir-login')?.addEventListener('click', function () {
+                sessionStorage.clear();
+                window.location.href = "login.html";
+            });
+
+            // Opcional: si quieres interceptar clics en botones/acciones
+            document.querySelectorAll(" button, .cart-icon, .cta-button, .add-to-cart-btn").forEach(el => {
+                el.addEventListener("click", function (e) {
+                    if (!sessionStorage.getItem("rol")) {
+                        e.preventDefault();
+                        $('#loginRequiredModal').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            const role = sessionStorage.getItem("rol");
+
+            if (role !== null) {
+                alert("Acceso denegado. Redirigiendo al login.");
+                window.location.href = "login.html";
+                sessionStorage.clear();
+            }
+        });
+    </script>
+</body>
+
+</html>

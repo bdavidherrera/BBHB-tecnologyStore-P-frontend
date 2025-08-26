@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="Description" content="Enter your description here" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="css/Admin.css" />
+    <title>AdminDashboard</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2><i class="fas fa-cogs"></i> Admin</h2>
+        <ul>
+            <li>
+                <a href="#productos"><i class="fas fa-box"></i> Productos</a>
+            </li>
+            <li>
+                <a href="#pedidos"><i class="fas fa-shopping-cart"></i> Pedidos</a>
+            </li>
+            <li>
+                <a href="#pagos"><i class="fas fa-credit-card"></i> Pagos</a>
+            </li>
+            <li>
+                <a href="#ventas"><i class="fas fa-chart-line"></i> Ventas</a>
+            </li>
+            <button id="btnCerrarSesion" class="btn-add">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Panel de Administración</h1>
+            <p class="mb-0">Bienvenido al sistema de gestión</p>
+        </header>
+
+        <!-- Sección Productos -->
+        <section id="productos" class="card seccion-content">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2>Gestión de Productos</h2>
+                <button class="btn-add" id="btnAgregarProducto">
+                    <i class="fas fa-plus"></i> Agregar Producto
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>idProducto</th>
+                            <th>nombreProducto</th>
+                            <th>imagen</th>
+                            <th>valor</th>
+                            <th>cantidad</th>
+                            <th>informacion</th>
+                            <th>fecha_creacion</th>
+                            <th>pocentaje_impuesto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaProductos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección Pedidos -->
+        <section id="pedidos" class="card seccion-content">
+            <h2>Gestión de Pedidos</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>idPedido</th>
+                            <th>estado</th>
+                            <th>infopersona</th>
+                            <th>correo</th>
+                            <th>Direccion</th>
+                            <th>nombresProductos</th>
+                            <th>fecha_pedido</th>
+                            <th>fecha_actualizacion</th>
+                            <th>subtotal</th>
+                            <th>descuentos_totales</th>
+                            <th>impuestos_totales</th>
+                            <th>total</th>
+                            <th>idUsuario</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPedidos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección Pagos -->
+        <section id="pagos" class="card seccion-content">
+            <h2>Pagos Registrados</h2>
+            <p id="countPagos"></p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>NombrePersona</th>
+                            <th>Direccion</th>
+                            <th>idFormaPago</th>
+                            <th>Telefono</th>
+                            <th>correo_electronico</th>
+                            <th>monto_subtotal</th>
+                            <th>descuentos</th>
+                            <th>impuestos</th>
+                            <th>monto_total</th>
+                            <th>fecha</th>
+                            <th>estado</th>
+                            <th>idUsuario</th>
+                            <th>idPedido</th>
+                            <th>referencia</th>
+                            <th>notas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaPagos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección Ventas -->
+        <section id="ventas" class="card seccion-content">
+            <div class="ventas-header">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-chart-line"></i> Gestión de Ventas</h2>
+                    <div class="ventas-actions">
+                        <button class="btn btn-outline-success" id="btnExportarVentas">
+                            <i class="fas fa-download"></i> Exportar CSV
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estadísticas Generales -->
+                <div id="estadisticasGenerales" class="estadisticas-container mb-4">
+                    <!-- Las estadísticas se cargarán aquí dinámicamente -->
+                </div>
+
+                <!-- Filtros de Fecha -->
+                <div class="filtros-ventas card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-filter"></i> Filtrar Ventas por Fecha</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="fechaInicio">
+                                        <i class="fas fa-calendar-alt"></i> Fecha Inicio
+                                    </label>
+                                    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="fechaFin">
+                                        <i class="fas fa-calendar-alt"></i> Fecha Fin
+                                    </label>
+                                    <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-primary mr-2" id="btnBuscarFechas">
+                                            <i class="fas fa-search"></i> Buscar
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary" id="btnLimpiarFiltros">
+                                            <i class="fas fa-eraser"></i> Limpiar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Estadísticas del Período -->
+                        <div id="estadisticasPeriodo" style="display: none;">
+                            <!-- Se mostrarán las estadísticas del período filtrado -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="cargandoVentas" class="text-center py-4" style="display: none;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando ventas...</p>
+            </div>
+
+            <!-- Tabla de Ventas -->
+            <div class="table-responsive">
+                <table class="table table-hover ventas-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Pedido</th>
+                            <th>Productos</th>
+                            <th>Subtotal</th>
+                            <th>Descuentos</th>
+                            <th>Impuestos</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaVentas">
+                        <!-- Las ventas se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para Detalle de Venta -->
+    <div class="modal fade" id="modalDetalleVenta" tabindex="-1" role="dialog" aria-labelledby="modalDetalleVentaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modalDetalleVentaLabel">
+                        <i class="fas fa-receipt"></i> Detalle de Venta
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="contenidoDetalleVenta">
+                    <!-- El contenido se cargará dinámicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Cambiar Estado de Venta -->
+    <div class="modal fade" id="modalCambiarEstado" tabindex="-1" role="dialog" aria-labelledby="modalCambiarEstadoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="modalCambiarEstadoLabel">
+                        <i class="fas fa-edit"></i> Cambiar Estado de Venta
+                    </h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="contenidoCambiarEstado">
+                    <!-- El contenido se cargará dinámicamente -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+    <script type="module" src="js/Admin/productosAdmin.js"></script>
+    <script type="module" src="js/pedidos.js"></script>
+    <script type="module" src="js/pagos.js"></script>
+    <script type="module" src="js/ventas.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Verificar sesión de administrador
+            const idUsuario = sessionStorage.getItem("idUsuario");
+            const role = sessionStorage.getItem("rol");
+
+            if (!idUsuario || role !== "admin") {
+                alert(
+                    "Debes iniciar sesión como administrador para acceder a esta página."
+                );
+                window.location.href = "login.html";
+            }
+
+            // Manejar clic en botón de cerrar sesión
+            $("#btnCerrarSesion").click(function (e) {
+                e.preventDefault();
+                if (confirm("¿Estás seguro de que quieres cerrar sesión?")) {
+                    sessionStorage.clear();
+                    window.location.href = "login.html";
+                }
+            });
+
+            // Manejar navegación entre secciones
+            $('.sidebar a[href^="#"]').click(function(e) {
+                e.preventDefault();
+                const target = $(this).attr('href');
+                
+                // Ocultar todas las secciones
+                $('.seccion-content').hide();
+                
+                // Mostrar la sección seleccionada
+                $(target).show();
+                
+                // Actualizar clase activa en sidebar
+                $('.sidebar a').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Mostrar productos por defecto
+            $('#productos').show();
+            $('.sidebar a[href="#productos"]').addClass('active');
+        });
+    </script>
+
+    <!-- Modal Agregar Producto -->
+    <div class="modal fade" id="modalAgregarProducto" tabindex="-1" role="dialog"
+        aria-labelledby="modalAgregarProductoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgregarProductoLabel">
+                        <i class="fas fa-plus-circle"></i> Agregar Nuevo Producto
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formAgregarProducto">
+                        <div class="row">
+                            <!-- Columna Izquierda -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nombreProducto">
+                                        <i class="fas fa-tag"></i> Nombre del Producto *
+                                    </label>
+                                    <input type="text" class="form-control" id="nombreProducto" name="nombreProducto"
+                                        placeholder="Ingrese el nombre del producto" required />
+                                    <small class="form-text text-muted">Nombre descriptivo del producto</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="valor">
+                                        <i class="fas fa-dollar-sign"></i> Precio *
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="valor" name="valor"
+                                            placeholder="0.00" min="0" step="0.01" required />
+                                    </div>
+                                    <small class="form-text text-muted">Precio en pesos colombianos</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cantidad">
+                                        <i class="fas fa-boxes"></i> Cantidad en Stock *
+                                    </label>
+                                    <input type="number" class="form-control" id="cantidad" name="cantidad"
+                                        placeholder="0" min="0" required />
+                                    <small class="form-text text-muted">Cantidad disponible en inventario</small>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha -->
+                            <div class="col-md-6">
+                                <!-- Selector de imagen mejorado -->
+                                <div class="form-group">
+                                    <label for="imagen">
+                                        <i class="fas fa-image"></i> Imagen del Producto *
+                                    </label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="imagen" name="imagen"
+                                            accept="image/*" required />
+                                        <label class="custom-file-label" for="imagen">Seleccionar imagen...</label>
+                                    </div>
+                                    <small class="form-text text-muted">Seleccione una imagen (JPG, PNG, GIF,
+                                        WEBP)</small>
+
+                                    <!-- Preview de la imagen -->
+                                    <div class="mt-3" id="imagenPreview" style="display: none">
+                                        <img id="previewImg" src="" alt="Preview" class="img-thumbnail"
+                                            style="max-height: 150px; max-width: 100%" />
+                                        <div class="mt-2">
+                                            <small class="text-muted">
+                                                <strong>Archivo seleccionado:</strong>
+                                                <span id="nombreArchivo"></span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="informacion">
+                                        <i class="fas fa-info-circle"></i> Información del
+                                        Producto *
+                                    </label>
+                                    <textarea class="form-control" id="informacion" name="informacion" rows="6"
+                                        placeholder="Ingrese la información detallada del producto..."
+                                        required></textarea>
+                                    <small class="form-text text-muted">Descripción completa del producto,
+                                        características,
+                                        especificaciones, etc.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Información adicional -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <strong>Información:</strong> Los campos marcados con (*)
+                                    son obligatorios. La fecha de creación y porcentaje de
+                                    impuesto se asignarán automáticamente.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="limpiarFormulario()">
+                                <i class="fas fa-eraser"></i> Limpiar
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Guardar Producto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Actualizar Producto -->
+    <div class="modal fade" id="modalActualizarProducto" tabindex="-1" role="dialog"
+        aria-labelledby="modalActualizarProductoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalActualizarProductoLabel">
+                        <i class="fas fa-edit"></i> Actualizar Producto
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formActualizarProducto">
+                        <!-- Campo oculto para el ID del producto -->
+                        <input type="hidden" id="idProductoActualizar" name="idProducto">
+
+                        <div class="row">
+                            <!-- Columna Izquierda -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nombreProductoActualizar">
+                                        <i class="fas fa-tag"></i> Nombre del Producto *
+                                    </label>
+                                    <input type="text" class="form-control" id="nombreProductoActualizar"
+                                        name="nombreProducto" placeholder="Ingrese el nombre del producto" required />
+                                    <small class="form-text text-muted">Nombre descriptivo del producto</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="valorActualizar">
+                                        <i class="fas fa-dollar-sign"></i> Precio *
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="valorActualizar" name="valor"
+                                            placeholder="0.00" min="0" step="0.01" required />
+                                    </div>
+                                    <small class="form-text text-muted">Precio en pesos colombianos</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cantidadActualizar">
+                                        <i class="fas fa-boxes"></i> Cantidad en Stock *
+                                    </label>
+                                    <input type="number" class="form-control" id="cantidadActualizar" name="cantidad"
+                                        placeholder="0" min="0" required />
+                                    <small class="form-text text-muted">Cantidad disponible en inventario</small>
+                                </div>
+                            </div>
+
+                            <!-- Columna Derecha -->
+                            <div class="col-md-6">
+                                <!-- Imagen actual -->
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-image"></i> Imagen Actual
+                                    </label>
+                                    <div class="current-image-container">
+                                        <img id="imagenActual" src="" alt="Imagen actual" class="current-image" />
+                                        <div class="mt-2">
+                                            <small class="text-muted">
+                                                <strong>Archivo actual:</strong>
+                                                <span id="nombreImagenActual"></span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Nueva imagen (opcional) -->
+                                <div class="form-group">
+                                    <label for="imagenActualizar">
+                                        <i class="fas fa-upload"></i> Cambiar Imagen (Opcional)
+                                    </label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="imagenActualizar" name="imagen"
+                                            accept="image/*" />
+                                        <label class="custom-file-label" for="imagenActualizar">Seleccionar nueva
+                                            imagen...</label>
+                                    </div>
+                                    <small class="form-text text-muted">Deje vacío para mantener la imagen
+                                        actual</small>
+
+                                    <!-- Preview de la nueva imagen -->
+                                    <div class="mt-3" id="imagenPreviewActualizar" style="display: none">
+                                        <div class="alert alert-info">
+                                            <strong>Nueva imagen seleccionada:</strong>
+                                        </div>
+                                        <img id="previewImgActualizar" src="" alt="Preview" class="preview-image" />
+                                        <div class="mt-2">
+                                            <small class="text-success">
+                                                <strong>Nuevo archivo:</strong>
+                                                <span id="nombreArchivoActualizar"></span>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="informacionActualizar">
+                                        <i class="fas fa-info-circle"></i> Información del Producto *
+                                    </label>
+                                    <textarea class="form-control" id="informacionActualizar" name="informacion"
+                                        rows="6" placeholder="Ingrese la información detallada del producto..."
+                                        required></textarea>
+                                    <small class="form-text text-muted">Descripción completa del producto,
+                                        características, especificaciones, etc.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Información adicional -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <strong>Importante:</strong>
+                                    Si no selecciona una nueva imagen, se mantendrá la imagen actual del producto.
+                                    Los campos marcados con (*) son obligatorios.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="form-actions">
+                            <div class="d-flex justify-content-end gap-2">
+                                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">
+                                    <i class="fas fa-times"></i> Cancelar
+                                </button>
+                                <button type="button" class="btn btn-warning btn-lg"
+                                    onclick="limpiarFormularioActualizar()">
+                                    <i class="fas fa-undo"></i> Restablecer
+                                </button>
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="fas fa-save"></i> Actualizar Producto
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript para el modal -->
+    <script>
+        $(document).ready(function () {
+            // Activar el modal al hacer clic en "Agregar Producto"
+            $("#btnAgregarProducto").click(function () {
+                $("#modalAgregarProducto").modal("show");
+            });
+
+            // Manejar la selección de archivo
+            $("#imagen").on("change", function () {
+                const file = this.files[0];
+                const label = $(this).next(".custom-file-label");
+                const preview = $("#imagenPreview");
+                const previewImg = $("#previewImg");
+                const nombreArchivo = $("#nombreArchivo");
+
+                if (file) {
+                    // Actualizar el label con el nombre del archivo
+                    label.text(file.name);
+
+                    // Mostrar información del archivo
+                    nombreArchivo.text(file.name);
+
+                    // Validar tipo de archivo
+                    const validTypes = [
+                        "image/jpeg",
+                        "image/jpg",
+                        "image/png",
+                        "image/gif",
+                        "image/webp",
+                    ];
+                    if (validTypes.includes(file.type)) {
+                        $(this).removeClass("is-invalid").addClass("is-valid");
+
+                        // Crear preview de la imagen
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            previewImg.attr("src", e.target.result);
+                            preview.show();
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        $(this).addClass("is-invalid").removeClass("is-valid");
+                        preview.hide();
+                        alert(
+                            "Por favor seleccione un archivo de imagen válido (JPG, PNG, GIF, WEBP)"
+                        );
+                        $(this).val("");
+                        label.text("Seleccionar imagen...");
+                    }
+                } else {
+                    label.text("Seleccionar imagen...");
+                    preview.hide();
+                }
+            });
+        });
+
+        // Limpiar formulario
+        function limpiarFormulario() {
+            $("#formAgregarProducto")[0].reset();
+            // Remover clases de validación
+            $(".form-control, .custom-file-input").removeClass(
+                "is-valid is-invalid"
+            );
+            // Limpiar preview de imagen
+            $("#imagenPreview").hide();
+            $("#previewImg").attr("src", "");
+            $(".custom-file-label").text("Seleccionar imagen...");
+        }
+
+        // Validación en tiempo real para otros campos
+        $("#nombreProducto, #valor, #cantidad, #informacion").on(
+            "input",
+            function () {
+                if ($(this).val().trim() === "") {
+                    $(this).addClass("is-invalid").removeClass("is-valid");
+                } else {
+                    $(this).removeClass("is-invalid").addClass("is-valid");
+                }
+            }
+        );
+
+        // Formatear precio mientras se escribe
+        $("#valor").on("input", function () {
+            let value = $(this).val();
+            if (value < 0) {
+                $(this).val(0);
+            }
+        });
+    </script>
+
+    <!-- Estilos CSS para Ventas -->
+    <style>
+        /* Estilos para la sección de ventas */
+        .ventas-header {
+            margin-bottom: 2rem;
+        }
+
+        .estadisticas-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            color: white;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card.bg-primary {
+            background: linear-gradient(135deg, #4e73df, #2e59d9);
+        }
+
+        .stat-card.bg-success {
+            background: linear-gradient(135deg, #1cc88a, #17a673);
+        }
+
+        .stat-card.bg-info {
+            background: linear-gradient(135deg, #36b9cc, #2c9faf);
+        }
+
+        .stat-card.bg-warning {
+            background: linear-gradient(135deg, #f6c23e, #dda20a);
+        }
+
+        .stat-card .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-info h4 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-card .stat-info p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .stat-card-small {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .filtros-ventas {
+            border-left: 4px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .filtros-ventas .card-title {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .ventas-table {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .ventas-table thead {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .ventas-table .venta-row {
+            transition: all 0.2s ease;
+        }
+
+        .ventas-table .venta-row:hover {
+            background-color: #f8f9fc;
+            transform: translateX(5px);
+        }
+
+        .customer-info strong {
+            color: #5a5c69;
+        }
+
+        .productos-preview {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .monto-total {
+            color: #1cc88a;
+            font-size: 1.1rem;
+        }
+
+        .monto-subtotal {
+            color: #36b9cc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .action-buttons .btn {
+            transition: all 0.2s ease;
+        }
+
+        .action-buttons .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .no-data {
+            padding: 3rem;
+        }
+
+        .badge-success {
+            background-color: #1cc88a !important;
+        }
+
+        .badge-warning {
+            background-color: #f6c23e !important;
+        }
+
+        .badge-danger {
+            background-color: #e74a3b !important;
+        }
+
+        .ventas-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .estadisticas-container {
+                padding: 1rem;
+            }
+
+            .stat-card {
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card .stat-info h4 {
+                font-size: 1.5rem;
+            }
+
+            .ventas-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .productos-preview {
+                max-width: 150px;
+            }
+        }
+
+        /* Sidebar styles improvement */
+        .sidebar a.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .seccion-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body>
+
+</html>
