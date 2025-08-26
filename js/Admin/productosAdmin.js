@@ -71,7 +71,7 @@ function getImageUrl(nombreImagen) {
     
     // Si la imagen contiene un timestamp (formato de multer), es una imagen subida
     if (nombreImagen.includes('-') && /\d{13}/.test(nombreImagen)) {
-        return `http://localhost:8000/uploads/productos/${nombreImagen}`;
+        return `https://bbhb-tecnologystore-p.onrender.com/uploads/productos/${nombreImagen}`;
     } else {
         // Es una imagen tradicional en la carpeta img
         return `img/${nombreImagen}`;
@@ -335,7 +335,7 @@ async function manejarEnvioFormulario(e) {
 // Nueva función para registrar producto con imagen
 async function registrarProductoConImagen(formData) {
     try {
-        const response = await fetch('http://localhost:8000/api/tecnologia/RegistrarProducto', {
+        const response = await fetch('https://bbhb-tecnologystore-p.onrender.com/api/tecnologia/RegistrarProducto', {
             method: 'POST',
             body: formData // No establecer Content-Type, fetch lo hará automáticamente
         });
@@ -352,7 +352,7 @@ async function registrarProductoConImagen(formData) {
 // Nueva función para actualizar producto con imagen
 async function actualizarProductosConImagen(formData) {
     try {
-        const response = await fetch('http://localhost:8000/api/tecnologia/ActualizarProducto', {
+        const response = await fetch('https://bbhb-tecnologystore-p.onrender.com/api/tecnologia/ActualizarProducto', {
             method: 'PUT',
             body: formData // No establecer Content-Type
         });

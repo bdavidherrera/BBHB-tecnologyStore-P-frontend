@@ -1,37 +1,37 @@
 //Usuarios API
-const urlRegistarUsu = "http://localhost:8000/Registrar";
-const urlLoginUsu = "http://localhost:8000/Login";
-const urlUsuarios = "http://localhost:8000/api/usuarios/admin"
-const urlActualizarUsuarios = "http://localhost:8000/api/usuarios/Actualizar";
-const urlEliminarUsuarios = "http://localhost:8000/api/usuarios/EliminarUsuario/:idusuarios";
+const urlRegistarUsu = "https://bbhb-tecnologystore-p.onrender.com/Registrar";
+const urlLoginUsu = "https://bbhb-tecnologystore-p.onrender.com/Login";
+const urlUsuarios = "https://bbhb-tecnologystore-p.onrender.com/api/usuarios/admin"
+const urlActualizarUsuarios = "https://bbhb-tecnologystore-p.onrender.com/api/usuarios/Actualizar";
+const urlEliminarUsuarios = "https://bbhb-tecnologystore-p.onrender.com/api/usuarios/EliminarUsuario/:idusuarios";
 
 //Productos API
-const urlProductos = "http://localhost:8000/api/tecnologia"
-const urlRegistrarProductos = "http://localhost:8000/api/tecnologia/RegistrarProducto"
-const urlActualizarProductos = "http://localhost:8000/api/tecnologia/ActualizarProducto"
-const urlEliminarProductos = "http://localhost:8000/api/tecnologia/EliminarProducto/:idProducto"
+const urlProductos = "https://bbhb-tecnologystore-p.onrender.com/api/tecnologia"
+const urlRegistrarProductos = "https://bbhb-tecnologystore-p.onrender.com/api/tecnologia/RegistrarProducto"
+const urlActualizarProductos = "https://bbhb-tecnologystore-p.onrender.com/api/tecnologia/ActualizarProducto"
+const urlEliminarProductos = "https://bbhb-tecnologystore-p.onrender.com/api/tecnologia/EliminarProducto/:idProducto"
 
 //Pedidos API
-const urlPedidos = "http://localhost:8000/api/pedidos";
-const urlPedidosUsuario = "http://localhost:8000/api/pedidos/usuario/:idUsuario";
-const urlPedidoDetalle = "http://localhost:8000/api/pedidos/:idPedido/detalle";
-const urlPedidoEstado = "http://localhost:8000/api/pedidos/:idPedido/estado";
-const urlPedidosTodo = "http://localhost:8000/api/pedidos/mostrarPedidos";
+const urlPedidos = "https://bbhb-tecnologystore-p.onrender.com/api/pedidos";
+const urlPedidosUsuario = "https://bbhb-tecnologystore-p.onrender.com/api/pedidos/usuario/:idUsuario";
+const urlPedidoDetalle = "https://bbhb-tecnologystore-p.onrender.com/api/pedidos/:idPedido/detalle";
+const urlPedidoEstado = "https://bbhb-tecnologystore-p.onrender.com/api/pedidos/:idPedido/estado";
+const urlPedidosTodo = "https://bbhb-tecnologystore-p.onrender.com/api/pedidos/mostrarPedidos";
 
 //Pagos API
-const urlPagos = "http://localhost:8000/api/pagos";
-const urlPagosUsuario = "http://localhost:8000/api/pagos/usuario/:idUsuario";
-const urlFormasPago = "http://localhost:8000/api/pagos/formas-pago";
-const urlPagoEstado = "http://localhost:8000/api/pagos/:idPago/estado";
-const urlPagosTodo = "http://localhost:8000/api/pagos/MostrarP";
-const urlPagosCount = "http://localhost:8000/api/pagos/count";
+const urlPagos = "https://bbhb-tecnologystore-p.onrender.com/api/pagos";
+const urlPagosUsuario = "https://bbhb-tecnologystore-p.onrender.com/api/pagos/usuario/:idUsuario";
+const urlFormasPago = "https://bbhb-tecnologystore-p.onrender.com/api/pagos/formas-pago";
+const urlPagoEstado = "https://bbhb-tecnologystore-p.onrender.com/api/pagos/:idPago/estado";
+const urlPagosTodo = "https://bbhb-tecnologystore-p.onrender.com/api/pagos/MostrarP";
+const urlPagosCount = "https://bbhb-tecnologystore-p.onrender.com/api/pagos/count";
 
 //Ventas API 
-const urlVentas = "http://localhost:8000/api/ventas";
-const urlVentasRangoFechas = "http://localhost:8000/api/ventas/rango-fechas";
-const urlVentasStats = "http://localhost:8000/api/ventas/estadisticas";
-const urlVentasUsuario = "http://localhost:8000/api/ventas/usuario/:idUsuario";
-const urlVentaEstado = "http://localhost:8000/api/ventas/:idVenta/estado";
+const urlVentas = "https://bbhb-tecnologystore-p.onrender.com/api/ventas";
+const urlVentasRangoFechas = "https://bbhb-tecnologystore-p.onrender.com/api/ventas/rango-fechas";
+const urlVentasStats = "https://bbhb-tecnologystore-p.onrender.com/api/ventas/estadisticas";
+const urlVentasUsuario = "https://bbhb-tecnologystore-p.onrender.com/api/ventas/usuario/:idUsuario";
+const urlVentaEstado = "https://bbhb-tecnologystore-p.onrender.com/api/ventas/:idVenta/estado";
 
 //Usuarios CRUD
 
@@ -407,7 +407,7 @@ export async function getHistorialCompras() {
             return { success: false, message: "No autorizado: debes ser cliente" };
         }
 
-        const response = await fetch(`http://localhost:8000/historial/${idUsuario}`, {
+        const response = await fetch(`https://bbhb-tecnologystore-p.onrender.com/historial/${idUsuario}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
