@@ -28,7 +28,7 @@ async function obtenerHistorialCompras() {
                 <td>${idPedido}</td>
                 <td>${estado}</td>
                 <td>${nombresProductos}</td>
-                <td>${new Date(fecha_pedido).toLocaleString()}</td>
+                <td>${new Date(fecha_pedido).toLocaleString("sv-SE", { timeZone: "America/Bogota" }).replace("T", " ")}</td> 
                 <td>$${Number(subtotal).toLocaleString('es-CO')}</td>
                 <td>$${Number(descuentos_totales).toLocaleString('es-CO')}</td>
                 <td>$${Number(impuestos_totales).toLocaleString('es-CO')}</td>

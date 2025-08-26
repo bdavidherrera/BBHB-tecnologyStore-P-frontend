@@ -1,11 +1,27 @@
 // ==================== CONFIGURACIÓN Y DATOS ====================
 
+// ==================== CONFIGURACIÓN Y DATOS ====================
+
 import { obtainProductos, crearPedido } from '../Api/consumeApi.js';
 
 const SHIPPING_COST = 15000; // Costo de envío en pesos colombianos
 
 let products = [];
 let cart = [];
+
+// ==================== FUNCIÓN PARA MANEJO DE IMÁGENES ====================
+
+function getImageUrl(nombreImagen) {
+    if (!nombreImagen) return 'img/default-product.png';
+    
+    // Si la imagen contiene un timestamp (formato de multer), es una imagen subida
+    if (nombreImagen.includes('-') && /\d{13}/.test(nombreImagen)) {
+        return `https://bbhb-tecnologystore-p.onrender.com/uploads/productos/${nombreImagen}`;
+    } else {
+        // Es una imagen tradicional en la carpeta img
+        return `img/${nombreImagen}`;
+    }
+}
 
 // ==================== CONFIGURACIÓN DE DESCUENTOS AUTOMÁTICOS ====================
 
@@ -44,7 +60,7 @@ async function loadProducts() {
                 name: product.nombreProducto,
                 description: product.informacion || "Producto de alta calidad",
                 price: parseFloat(product.valor),
-                image: product.imagen ? `img/${product.imagen}` : null,
+                image: product.imagen ? getImageUrl(product.imagen) : null,
                 stock: product.cantidad || 0,
                 taxRate: (product.porcentaje_impuesto || 19) / 100,
                 // Descuentos específicos del producto (automáticos)

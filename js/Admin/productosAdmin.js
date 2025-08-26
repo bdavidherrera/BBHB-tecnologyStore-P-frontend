@@ -25,7 +25,6 @@ async function obtenerProductos() {
 
         ProductosObtained.forEach((productos) => {
             const { idProducto, nombreProducto, imagen, valor, cantidad, informacion, fecha_creacion, porcentaje_impuesto } = productos;
-
             // Determinar la URL correcta de la imagen
             const imagenUrl = getImageUrl(imagen);
 
@@ -41,7 +40,7 @@ async function obtenerProductos() {
                 <td>$${Number(valor).toLocaleString('es-CO')}</td>
                 <td>${cantidad}</td>
                 <td>${informacion}</td>
-                <td>${new Date(fecha_creacion).toLocaleString()}</td>
+                <td>${fecha_creacion}</td>
                 <td>${porcentaje_impuesto || 19}%</td>
                 <td>
                     <button class="btn btn-sm btn-edit btn-action" data-id="${idProducto}">
